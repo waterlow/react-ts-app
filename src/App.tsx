@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect, useCallback, MouseEventHandler } from 'react'
+import logo from './logo.svg'
+import './App.css'
 
 function App() {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState('')
+  const handleClick = useCallback<MouseEventHandler>(
+    (e) => alert(e.target), []
+  )
+
   useEffect(() => {
     async function getMessage() {
-      const res = await fetch('/api/hello?name=water');
-      const message = await res.text();
-      setMessage(message);
+      const res = await fetch('/api/hello?name=water')
+      const message = await res.text()
+      setMessage(message)
     }
-    getMessage();
-  }, []);
+    getMessage()
+  }, [])
 
   return (
     <div className="App">
@@ -25,13 +29,14 @@ function App() {
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={handleClick}
         >
           Learn React
         </a>
         {message}
       </header>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
